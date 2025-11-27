@@ -1,4 +1,4 @@
-name: Greeting  # Name of workflow
+name: Deply Dist  # Name of workflow
 on : [push, workflow_dispatch]  # Trigger events
 jobs:   # task to be perform
     test:   # what to run
