@@ -24,3 +24,27 @@ jobs:   # task to be perform
 
             - name: run tests
               run: npm run test
+
+    deploy:
+      runs-on: ubuntu-latest
+      steps:
+         - name: Get Code
+           uses: actions/checkout@v5
+
+         - name: Install nodejs V20
+           uses: actions/setup-node@v6
+           with: 
+                node-version: 20
+
+         - name: Istall dependencies
+           run: npm ci
+
+         - name: Build project
+           run: npm run build
+
+         - name: Deploy
+           run: echo "deploy successfully"
+
+
+
+     
