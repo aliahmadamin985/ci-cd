@@ -1,39 +1,46 @@
-name: Deploy Dist
-# on: [push,workflow_dispatch]
-on:
-    push:
-        branches:
-            - main
-            - 'feature/**'
-        paths-ignore:
-            - '.github/workflows/*'  
-            - README.md  
-    workflow_dispatch:        
-jobs:
-    test:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Get Code
-              uses: actions/checkout@v4
-            #   run: |
-            #     echo "cloning repo.."
-            #     echo "${{toJson(github)}}"
-            #     git clone https://github.com/${{github.repository}}.git
-            - name: Install Node 20
-              uses: actions/setup-node@v4
+name: Deply Dist  # Name of workflow
+# on : [push, workflow_dispatch]  # Trigger events
+on:  # apply filter on trigger workflow (workflow only trigger when any change occur in only main branch)
+  push:
+    branches: 
+      - main
+      - feature/**
+    paths-ignore:
+      - '.github/workflows/*'
+      - README.md
+  workflow_dispatch:
+
+jobs:   # task to be perform
+    test:   # what to run
+        runs-on: ubuntu-latest  # run on which machine
+        steps: 
+            - name:  Get Code
+              uses: actions/checkout@v5   # clone code at remote machine
+              #run: |
+              #echo "cloning repo."
+              #echo "${{toJson(github)}}"
+              #git clone https://github.com/aliahmadamin985/ci-cd.git
+
+            - name: Install nodejs V20
+              uses: actions/setup-node@v6
               with: 
                 node-version: 20
-            # - name: print node version
-            #   run: node -v
+
+            - name: print node js version
+              run: node -v
+
             - name: Cache Dependencies
               uses: actions/cache@v4
-              with: 
+              with:
                 path: ~/.npm
                 key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-            - name: Install Dependencies
-              run: npm ci 
-            - name: Run Tests
+
+            - name: Istall dependencies
+              run: npm ci
+
+            - name: run tests
               run: npm run test
+
     build:  
         needs: test
         runs-on: ubuntu-latest   
@@ -71,4 +78,3 @@ jobs:
                 path: dist
             - name: Deploy
               run: echo "Deploy successfull"  
-
