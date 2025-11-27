@@ -1,6 +1,6 @@
 name: Deply Dist  # Name of workflow
 # on : [push, workflow_dispatch]  # Trigger events
-on:
+on:  # apply filter on trigger workflow (workflow only trigger when any change occur in only main branch)
   push:
     branches: 
       - main
