@@ -1,5 +1,15 @@
 name: Deply Dist  # Name of workflow
-on : [push, workflow_dispatch]  # Trigger events
+# on : [push, workflow_dispatch]  # Trigger events
+on:
+  push:
+    branches: 
+      - main
+      - feature/**
+    paths-ignore:
+      - '.github\workflows/*'
+      - README.md
+  workflow_dispatch:
+
 jobs:   # task to be perform
     test:   # what to run
         runs-on: ubuntu-latest  # run on which machine
